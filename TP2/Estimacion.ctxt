@@ -1,3 +1,18 @@
 #BlueJ class context
 comment0.target=Estimacion
-numComments=1
+comment0.text=\r\n\ Clase\ Estimacion.\r\n\ \r\n\ @author\ (Emilio\ Jos\u00E9\ Romero)\ \r\n\ @version\ (08/06/2021)\r\n
+comment1.params=tiempo\ dinero\ esfuerzo
+comment1.target=Estimacion(int,\ double,\ int)
+comment2.params=tiempo
+comment2.target=void\ setTiempo(int)
+comment3.params=
+comment3.target=int\ getTiempo()
+comment4.params=dinero
+comment4.target=void\ setDinero(double)
+comment5.params=
+comment5.target=double\ getDinero()
+comment6.params=esfuerzo
+comment6.target=void\ setEsfuerzo(int)
+comment7.params=
+comment7.target=int\ getEsfuerzo()
+numComments=8

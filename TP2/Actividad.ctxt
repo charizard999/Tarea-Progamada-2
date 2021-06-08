@@ -1,7 +1,9 @@
 #BlueJ class context
 comment0.target=Actividad
-comment1.params=id\ nombre\ fechaInicio\ fechaFinal\ responsable\ estimacion\ gradoAvancce
-comment1.target=Actividad(int,\ java.lang.String,\ java.util.Date,\ java.util.Date,\ Responsable,\ Estimacion,\ int)
+comment0.text=\r\n\ Clase\ Actividad.\r\n\ \r\n\ @author\ (Emilio\ Jos\u00E9\ Romero)\ \r\n\ @version\ (08/06/2021)\r\n
+comment1.params=id\ nombre\ fechaInicio\ fechaFinal\ gradoAvancce
+comment1.target=Actividad(int,\ java.lang.String,\ java.util.Date,\ java.util.Date,\ int)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ xd\r\n
 comment10.params=fechaFinal
 comment10.target=void\ setFechaFinal(java.util.Date)
 comment11.params=

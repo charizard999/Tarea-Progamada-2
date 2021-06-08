@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=Categoria
+comment1.params=nombre\ id
+comment1.target=Categoria(java.lang.String,\ int)
+comment2.params=id
+comment2.target=void\ setId(int)
+comment3.params=
+comment3.target=int\ getId()
+comment4.params=nombre
+comment4.target=void\ setNombre(java.lang.String)
+comment5.params=
+comment5.target=java.lang.String\ getNombre()
+comment6.params=listaActividades
+comment6.target=void\ setListaActividades(java.util.ArrayList)
+comment7.params=
+comment7.target=java.util.ArrayList\ getListaActividades()
+comment8.params=actividad
+comment8.target=void\ agregarActividad(Actividad)
+numComments=9

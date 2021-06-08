@@ -1,5 +1,11 @@
 import java.util.Date;
 
+/**
+ * Clase Actividad.
+ * 
+ * @author (Emilio José Romero) 
+ * @version (08/06/2021)
+ */
 public class Actividad {
 
     private int id;
@@ -10,15 +16,17 @@ public class Actividad {
     private Estimacion estimacion;
     private int gradoAvancce;
 
-    public Actividad(int id, String nombre, Date fechaInicio, Date fechaFinal, Responsable responsable, Estimacion estimacion,  int gradoAvancce){
+    /**
+     * Constructor for objects of class xd
+     */
+    public Actividad(int id, String nombre, Date fechaInicio, Date fechaFinal,  int gradoAvancce){
         this.id = id;
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
         this.gradoAvancce = gradoAvancce;
 
-        responsable = new Responsable();
-        estimacion = new Estimacion();
+        
 
     }
     
@@ -71,10 +79,4 @@ public class Actividad {
         return estimacion;
     }
 
-
-
-
-
-    
-    
 }
