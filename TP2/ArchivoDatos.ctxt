@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=ArchivoDatos
+comment1.params=nombreCategoria
+comment1.target=ArchivoDatos(java.lang.String)
+comment2.params=nombreCategoria
+comment2.target=void\ setNombreCategoria(java.lang.String)
+comment3.params=
+comment3.target=java.lang.String\ getNombreCategoria()
+numComments=4

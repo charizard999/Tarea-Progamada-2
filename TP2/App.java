@@ -41,7 +41,7 @@ public class App {
     public static void main(String[] args) throws Exception {
        
         
-        
+        Datos datos= new Datos();
         
         Scanner sc = new Scanner(System.in);
         int opc = sc.nextInt();
@@ -57,6 +57,10 @@ public class App {
             opc = sc.nextInt();
             switch(opc){
                 case 1 :
+                datos.getArchivoDatos().add(new ArchivoDatos("categoria 1"));
+                datos.getArchivoDatos().add(new ArchivoDatos("categoria 2"));
+                datos.getArchivoDatos().add(new ArchivoDatos("categoria 3"));
+                datos.escribirFichero((Object)datos.getArchivoDatos(), "Categorias nombre");
 
                 break;
                 case 2 :
@@ -72,7 +76,7 @@ public class App {
                 String date = sc.next();
                 System.out.println("Defina la fecha de final.");
                 String date2 = sc.next();
-                System.out.println("Defina el porcentaje de avamce de la tarea.");
+                System.out.println("Defina el porcentaje de avance de la tarea.");
                 int gradoAvance = sc.nextInt();
                 
 
