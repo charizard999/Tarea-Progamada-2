@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 
@@ -44,7 +45,7 @@ public class App {
         Datos datos= new Datos();
         
         Scanner sc = new Scanner(System.in);
-        int opc = sc.nextInt();
+        int opc = 0;
         do{
             System.out.println("1. Crear Lista.");
             System.out.println("2. Definir Lista.");
@@ -57,14 +58,15 @@ public class App {
             opc = sc.nextInt();
             switch(opc){
                 case 1 :
-                datos.getArchivoDatos().add(new ArchivoDatos("categoria 1"));
-                datos.getArchivoDatos().add(new ArchivoDatos("categoria 2"));
-                datos.getArchivoDatos().add(new ArchivoDatos("categoria 3"));
-                datos.escribirFichero((Object)datos.getArchivoDatos(), "Categorias nombre");
-
+                System.out.println("Defina el nombre de la categoria : ");
+                String nombreCategoria = sc.next();
+                Categoria ct = new Categoria(nombreCategoria, datos.getCategorias().size());
+                datos.getCategorias().add(ct);
+                datos.escribirFichero((Object)datos.getCategorias(), nombreCategoria);
+                datos.getArchivoDatos();//dasfadafdadfafd                
                 break;
                 case 2 :
-
+              
                 break;
                 case 3 :
                 System.out.println("Cual es la categaria de la actividad?");

@@ -54,7 +54,7 @@ public class Datos {
     public Object leerFichero(String nombreArchivo){
         try{
             ObjectInputStream leyendoFichero = new ObjectInputStream( 
-            new FileInputStream("objetos.txt") );
+            new FileInputStream(nombreArchivo + ".txt") );
             Object object = (Object)leyendoFichero.readObject();
             leyendoFichero.close();
             return object;
