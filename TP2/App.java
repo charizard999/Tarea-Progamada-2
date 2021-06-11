@@ -47,6 +47,7 @@ public class App {
         Scanner sc = new Scanner(System.in);
         int opc = 0;
         do{
+            
             System.out.println("1. Crear Lista.");
             System.out.println("2. Definir Lista.");
             System.out.println("3. Agregar Actividad.");
@@ -57,32 +58,51 @@ public class App {
             System.out.println("8. Salir.");
             opc = sc.nextInt();
             switch(opc){
-                case 1 :
-                System.out.println("Defina el nombre de la categoria : ");
-                String nombreCategoria = sc.next();
-                Categoria ct = new Categoria(nombreCategoria, datos.getCategorias().size());
-                datos.getCategorias().add(ct);
-                datos.escribirFichero((Object)datos.getCategorias(), nombreCategoria);
-                datos.getArchivoDatos();//dasfadafdadfafd                
+                case 1 :{
+                    System.out.println("Defina el nombre de la categoria : ");
+                    String nombreCategoria = sc.next();
+                    if(!datos.existeLista(nombreCategoria)){
+                        Categoria ct = new Categoria(nombreCategoria, datos.getCategorias().size());
+                        
+                        datos.escribirFichero((Object)ct, nombreCategoria);
+                        ArchivoDatos ad = new ArchivoDatos(nombreCategoria);
+                        datos.getArchivoDatos().add(ad);
+                        datos.escribirFichero((Object)datos.getArchivoDatos(), "nombreDeListas"); 
+                        System.out.println("La categoría se guardó correctamente.");
+                    }else{
+                        System.out.println("La categoría ya existe.");
+                    }   
+                    limpiarMenu(sc); 
                 break;
+            }
                 case 2 :
+                    
+                    
               
                 break;
-                case 3 :
-                System.out.println("Cual es la categaria de la actividad?");
-                String nombreActividad = sc.next();
-                //verificar que la categoria existe
-                System.out.println("Defina el nombre de la actividad.");
-                String nombre = sc.next();
-                System.out.println("Defina la fecha de inicio.");
-                String date = sc.next();
-                System.out.println("Defina la fecha de final.");
-                String date2 = sc.next();
-                System.out.println("Defina el porcentaje de avance de la tarea.");
-                int gradoAvance = sc.nextInt();
-                
+                case 3 :{
+                    System.out.println("Cual es la categaria de la actividad?");
+                    String nombreCategoria = sc.next();
+                    if(datos.existeLista(nombreCategoria)){
+                        Categoria ct = datos.recuperarCategoria(nombreCategoria);
+                        System.out.println("Defina el nombre de la actividad.");
+                        String nombre = sc.next();
+                        System.out.println("Defina la fecha de inicio.");
+                        String date = sc.next();
+                        System.out.println("Defina la fecha de final.");
+                        String date2 = sc.next();
+                        System.out.println("Defina el porcentaje de avance de la tarea.");
+                        int gradoAvance = sc.nextInt();
+                        Actividad actividad = new Actividad(ct.getListaActividades().size(), nombreCategoria, datos.parseDate(date), datos.parseDate(date2), gradoAvance);
+                        ct.getListaActividades().add(actividad);
+                    }else{
+                        System.out.println("La categoria no existe.");
+                    }
+                    
+                   
 
                 break;
+                }
                 case 4 :
 
                 break;

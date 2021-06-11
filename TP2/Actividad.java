@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -6,7 +7,7 @@ import java.util.Date;
  * @author (Emilio José Romero) 
  * @version (08/06/2021)
  */
-public class Actividad {
+public class Actividad implements Serializable{
 
     private int id;
     private String nombre;
@@ -15,6 +16,7 @@ public class Actividad {
     private Responsable responsable;
     private Estimacion estimacion;
     private int gradoAvancce;
+    private String estado;//creada, iniciada, finalizada
 
     /**
      * Constructor for objects of class xd

@@ -2,7 +2,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Datos {
 
@@ -12,7 +15,17 @@ public class Datos {
 
     public Datos(){
         categorias = new ArrayList<>();
-        archivoDatos = new ArrayList<>();
+        Object object = (Object)leerFichero("nombreDeListas");
+        archivoDatos = (ArrayList<ArchivoDatos>)object;
+        if(archivoDatos == null){
+            archivoDatos = new ArrayList<>();
+        }else{
+            for (ArchivoDatos archivoDatos2 : archivoDatos) {
+                Object object2 = (Object)leerFichero(archivoDatos2.getNombreCategoria());
+                Categoria ct = (Categoria)object2;
+                categorias.add(ct);
+            }
+        }
     }
 
     public void setCategorias(ArrayList<Categoria> categorias){
@@ -59,10 +72,27 @@ public class Datos {
             leyendoFichero.close();
             return object;
         }catch(Exception e){
-            e.printStackTrace();
+            //e.printStackTrace();
             return null;
         }
     }
+
+    public boolean existeLista(String nombre){
+        for(Categoria categoria : categorias){
+            if(categoria.getNombre().toUpperCase().equals(nombre.toUpperCase())){
+                return true;
+            }
+        }
+        return false;
+    }
     
+    public Date parseDate(String fecha){
+        try {
+            Date date = new SimpleDateFormat("dd/mm/yyyy").parse(fecha);
+            return date;
+        } catch (ParseException e) {
+            return null;
+        }
+    }
 
 }

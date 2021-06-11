@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Categoria {
+public class Categoria implements Serializable{
 
     private String nombre;
     private int id;
@@ -9,6 +10,11 @@ public class Categoria {
     public Categoria(String nombre, int id){
         this.nombre = nombre;
         this.id = id;
+        listaActividades = new ArrayList<>();
+
+    }
+
+    public Categoria(){
 
     }
     
