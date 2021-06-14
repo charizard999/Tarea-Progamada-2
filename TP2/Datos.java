@@ -11,7 +11,7 @@ public class Datos {
 
     private ArrayList<Categoria>categorias;
     private ArrayList<ArchivoDatos> archivoDatos;
-    
+    private ArrayList<Responsable>responsables;
 
     public Datos(){
         categorias = new ArrayList<>();
@@ -23,8 +23,17 @@ public class Datos {
             for (ArchivoDatos archivoDatos2 : archivoDatos) {
                 Object object2 = (Object)leerFichero(archivoDatos2.getNombreCategoria());
                 Categoria ct = (Categoria)object2;
+                System.out.println(archivoDatos2.getNombreCategoria());
+                System.out.println(ct.getNombre());
+                
                 categorias.add(ct);
+
             }
+        }
+        Object object2 = (Object)leerFichero("Responsables");
+        responsables = (ArrayList<Responsable>)object2;
+        if(responsables == null){
+            responsables = new ArrayList<>();
         }
     }
 
@@ -42,6 +51,30 @@ public class Datos {
         return archivoDatos;
     }
 
+    public void setResponsable(ArrayList<Responsable> responsables){
+        this.responsables = responsables;
+    }
+    public ArrayList<Responsable> getResponsable(){
+        return responsables;
+    }
+
+    public boolean existeResponsable(String nombre){
+        for(Responsable r : responsables){
+            if(r.getNombre().toUpperCase().equals(nombre.toUpperCase())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Responsable recuperarResponsable(String nombre){
+        for(Responsable r: responsables){
+            if(r.getNombre().toUpperCase().equals(nombre.toUpperCase())){
+                return r;
+            }
+        }
+        return null;
+    }
 
     public Categoria recuperarCategoria(String nombre){
         for(Categoria ct: categorias){
@@ -58,7 +91,7 @@ public class Datos {
             new FileOutputStream(nombreArchivo + ".txt") );
             escribiendoFichero.writeObject(ob);
             escribiendoFichero.close();
-
+            System.out.println("dfsz");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -93,6 +126,24 @@ public class Datos {
         } catch (ParseException e) {
             return null;
         }
+    }
+
+    public void imprimirResponsables(){
+        int contador = 1 ;
+        for(Responsable r : responsables){
+            System.out.println(contador + " " + r.getNombre());
+            contador++;
+        }
+    }
+
+    public Responsable responsableIndex(int i){
+        int contador= 1 ;
+        for(Responsable r : responsables){
+            if(contador == i){
+                return r;
+            }
+        }
+        return null;
     }
 
 }

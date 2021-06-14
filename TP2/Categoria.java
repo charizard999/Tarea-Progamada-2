@@ -43,4 +43,14 @@ public class Categoria implements Serializable{
         
 
     }
+
+
+    public boolean existeActividad(String nombre){
+        for(Actividad actividad : listaActividades){
+            if(actividad.getNombre().toUpperCase().equals(nombre.toUpperCase())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

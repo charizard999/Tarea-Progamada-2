@@ -1,10 +1,12 @@
+import java.io.Serializable;
+
 /**
  * Clase Estimacion.
  * 
  * @author (Emilio José Romero) 
  * @version (08/06/2021)
  */
-public class Estimacion {
+public class Estimacion implements Serializable{
     
     private int tiempo;
     private double dinero;

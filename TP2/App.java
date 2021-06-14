@@ -49,7 +49,7 @@ public class App {
         do{
             
             System.out.println("1. Crear Lista.");
-            System.out.println("2. Definir Lista.");
+            System.out.println("2. Agregar Responsables.");
             System.out.println("3. Agregar Actividad.");
             System.out.println("4. Modificar Lista.");
             System.out.println("5. Consultar Lista.");
@@ -63,8 +63,11 @@ public class App {
                     String nombreCategoria = sc.next();
                     if(!datos.existeLista(nombreCategoria)){
                         Categoria ct = new Categoria(nombreCategoria, datos.getCategorias().size());
-                        
+                        System.out.println("nombre nuevo "+ ct.getNombre());
                         datos.escribirFichero((Object)ct, nombreCategoria);
+                        Object ob = datos.leerFichero(nombreCategoria);
+                        Categoria ct2 = (Categoria)ob;
+                        System.out.println(ct2.getNombre());
                         ArchivoDatos ad = new ArchivoDatos(nombreCategoria);
                         datos.getArchivoDatos().add(ad);
                         datos.escribirFichero((Object)datos.getArchivoDatos(), "nombreDeListas"); 
@@ -75,26 +78,51 @@ public class App {
                     limpiarMenu(sc); 
                 break;
             }
-                case 2 :
-                    
-                    
-              
+                case 2 :{
+                    System.out.println("Defina el nombre del responsable: ");
+                    String nombreResponsable = sc.next();
+                    if(!datos.existeResponsable(nombreResponsable)){
+                        Responsable responsable = new Responsable(nombreResponsable);
+                        datos.getResponsable().add(responsable);
+                        datos.escribirFichero((Object)datos.getResponsable(), "Responsables");
+                        System.out.println("Se agrego correctamente.");
+                    }else{
+                        System.out.println("El responsable ya existe.");
+                    }
+                    limpiarMenu(sc);   
                 break;
+                }
                 case 3 :{
-                    System.out.println("Cual es la categaria de la actividad?");
+                    System.out.println("Cual es la categoria de la actividad?");
                     String nombreCategoria = sc.next();
                     if(datos.existeLista(nombreCategoria)){
                         Categoria ct = datos.recuperarCategoria(nombreCategoria);
                         System.out.println("Defina el nombre de la actividad.");
                         String nombre = sc.next();
-                        System.out.println("Defina la fecha de inicio.");
-                        String date = sc.next();
-                        System.out.println("Defina la fecha de final.");
-                        String date2 = sc.next();
-                        System.out.println("Defina el porcentaje de avance de la tarea.");
-                        int gradoAvance = sc.nextInt();
-                        Actividad actividad = new Actividad(ct.getListaActividades().size(), nombreCategoria, datos.parseDate(date), datos.parseDate(date2), gradoAvance);
-                        ct.getListaActividades().add(actividad);
+                        if(!ct.existeActividad(nombre)){
+                            System.out.println("Defina la fecha de inicio.");
+                            String date = sc.next();
+                            System.out.println("Defina la fecha de final.");
+                            String date2 = sc.next();
+                            System.out.println("Defina el porcentaje de avance de la tarea.");
+                            int gradoAvance = sc.nextInt();
+                            System.out.println("Defina la duracion de la actividad.");
+                            int duracion = sc.nextInt();
+                            System.out.println("Defina  el presupuesto.");
+                            double dinero = sc.nextDouble();
+                            System.out.println("Defina de la actividad en un rango de 0 a 10.");
+                            int esfuerzo = sc.nextInt();
+                            Actividad actividad = new Actividad(ct.getListaActividades().size(), nombreCategoria, datos.parseDate(date), datos.parseDate(date2), gradoAvance);
+                            actividad.setEstimacion(new Estimacion(duracion, dinero, esfuerzo));
+                            ct.getListaActividades().add(actividad);
+                            System.out.println("Escoja el numero del responsable para la actividad.");
+                            datos.imprimirResponsables();
+                            int responsable = sc.nextInt();
+                            actividad.setResponsable(datos.responsableIndex(responsable));
+                            datos.escribirFichero((Object)ct, ct.getNombre());
+                            System.out.println("Se agregó correctamente.");
+                        }
+                       
                     }else{
                         System.out.println("La categoria no existe.");
                     }
