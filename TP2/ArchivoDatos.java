@@ -1,5 +1,11 @@
 import java.io.Serializable;
 
+/**
+ * Clase main.
+ * 
+ * @author (Emilio José Romero) 
+ * @version (08/06/2021)
+ */
 public class ArchivoDatos implements Serializable {
     private String nombreCategoria;
 

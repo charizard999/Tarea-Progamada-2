@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -91,7 +92,6 @@ public class Datos {
             new FileOutputStream(nombreArchivo + ".txt") );
             escribiendoFichero.writeObject(ob);
             escribiendoFichero.close();
-            System.out.println("dfsz");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -144,6 +144,46 @@ public class Datos {
             }
         }
         return null;
+    }
+
+    public boolean eliminarFichero(String nombre){
+        File fichero = new File(nombre + ".txt");
+        return fichero.delete();
+    } 
+    public void eliminarCategoria(String nombre){
+        Categoria aux  = null;
+        for(Categoria c: categorias){
+            if(c.getNombre().toUpperCase().equals(nombre.toUpperCase())){
+                aux = c;
+            }
+        }
+        categorias.remove(aux);
+    } 
+    public void eliminarArchivoDatos(String nombre){
+        ArchivoDatos aux  = null;
+        for(ArchivoDatos a: archivoDatos){
+            if(a.getNombreCategoria().toUpperCase().equals(nombre.toUpperCase())){
+                aux = a;
+            }
+        }
+        archivoDatos.remove(aux);
+    } 
+
+    public ArchivoDatos recuperarArchivoDatos(String nombre){
+        for(ArchivoDatos a: archivoDatos){
+            if(a.getNombreCategoria().toUpperCase().equals(nombre.toUpperCase())){
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public void imprimirCategarias(){
+        int cont = 1;
+        for(ArchivoDatos a: archivoDatos){
+            System.out.println(cont + ". " + a.getNombreCategoria());
+            cont++;
+        }
     }
 
 }

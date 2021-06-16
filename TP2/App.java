@@ -11,7 +11,7 @@ import java.io.*;
 public class App {
 
     /**
-     * Este metodo limpia la consola.
+     * Limpia la consola.
      */
     public static void limpiarConsola(){
         try {
@@ -23,7 +23,7 @@ public class App {
     }
     
      /**
-     * Este metodo limpia el menu.
+     *Limpia el menu.
      */
     public static void limpiarMenu(Scanner sc){
         String readString = sc.nextLine();
@@ -48,14 +48,17 @@ public class App {
         int opc = 0;
         do{
             
-            System.out.println("1. Crear Lista.");
-            System.out.println("2. Agregar Responsables.");
-            System.out.println("3. Agregar Actividad.");
-            System.out.println("4. Modificar Lista.");
-            System.out.println("5. Consultar Lista.");
-            System.out.println("6. Guardar datos.");
-            System.out.println("7. Buscar Lista.");
-            System.out.println("8. Salir.");
+            System.out.println("1. Crear Lista.");//
+            System.out.println("2. Agregar Responsables.");//
+            System.out.println("3. Agregar Actividad.");//
+            System.out.println("4. Iniciar Actividad.");
+            System.out.println("5. Mostrar Tablero.");
+            System.out.println("6. Modificar Lista.");//
+            System.out.println("7. Consultar Lista.");//
+            System.out.println("8. Consultar Actividad.");
+            System.out.println("9. Eliminar categoría.");//
+            System.out.println("10. Eliminar actividad.");//revisar
+            System.out.println("11. Salir.");
             opc = sc.nextInt();
             switch(opc){
                 case 1 :{
@@ -63,11 +66,8 @@ public class App {
                     String nombreCategoria = sc.next();
                     if(!datos.existeLista(nombreCategoria)){
                         Categoria ct = new Categoria(nombreCategoria, datos.getCategorias().size());
-                        System.out.println("nombre nuevo "+ ct.getNombre());
                         datos.escribirFichero((Object)ct, nombreCategoria);
-                        Object ob = datos.leerFichero(nombreCategoria);
-                        Categoria ct2 = (Categoria)ob;
-                        System.out.println(ct2.getNombre());
+                        datos.getCategorias().add(ct);
                         ArchivoDatos ad = new ArchivoDatos(nombreCategoria);
                         datos.getArchivoDatos().add(ad);
                         datos.escribirFichero((Object)datos.getArchivoDatos(), "nombreDeListas"); 
@@ -113,6 +113,7 @@ public class App {
                             System.out.println("Defina de la actividad en un rango de 0 a 10.");
                             int esfuerzo = sc.nextInt();
                             Actividad actividad = new Actividad(ct.getListaActividades().size(), nombreCategoria, datos.parseDate(date), datos.parseDate(date2), gradoAvance);
+                            actividad.setEstado("Creada");
                             actividad.setEstimacion(new Estimacion(duracion, dinero, esfuerzo));
                             ct.getListaActividades().add(actividad);
                             System.out.println("Escoja el numero del responsable para la actividad.");
@@ -126,25 +127,88 @@ public class App {
                     }else{
                         System.out.println("La categoria no existe.");
                     }
-                    
-                   
-
                 break;
                 }
                 case 4 :
-
+                
                 break;
                 case 5 :
 
                 break;
-                case 6 :
+                case 6 :{
+                    System.out.println("Cual categoria desea modificar?");
+                    String nombre = sc.next();
+                    if(datos.existeLista(nombre)){
+                        Categoria ct = datos.recuperarCategoria(nombre);
+                        System.out.println("Defina el nuevo nombre de la categoria.");
+                        String nombreNuevo = sc.next();
+                        ct.setNombre(nombreNuevo);
+                        if(datos.eliminarFichero(nombre)){
+                            ArchivoDatos archivoDatos = datos.recuperarArchivoDatos(nombre);
+                            archivoDatos.setNombreCategoria(nombreNuevo);
+                            datos.escribirFichero((Object)datos.getArchivoDatos(), "nombreDeListas"); 
+                            datos.escribirFichero((Object)ct, ct.getNombre());
+                            System.out.println("Se agregó correctamente.");
+                        }else{
+                            System.out.println("Hubo un error al modificar el fichero.");
+                        }
+                        
+                    }else{
+                        System.out.println("La categoria no existe.");
+                    }
+                    limpiarMenu(sc);
+                break;
+                }
+                case 7 :
+                    System.out.println("Lista de categorias: ");
+                    datos.imprimirCategarias();
+                    limpiarMenu(sc);
+                break;
+                case 8 :
 
                 break;
-                case 7 :
+                case 9 :{
+                    System.out.println("Cual categoria desea eliminar?");
+                    String nombre =sc.next();
+                    if(datos.existeLista(nombre)){
+                        if(datos.eliminarFichero(nombre)){
+                            datos.eliminarCategoria(nombre);
+                            datos.eliminarArchivoDatos(nombre);
+                            datos.escribirFichero((Object)datos.getArchivoDatos(), "nombreDeListas");
+                            System.out.println("Se elimino correctamente.");
+                        }else{
+                            System.out.println("Hubo un error al eliminar el fichero.");
+                        }
+                    }else{
+                        System.out.println("La categoria no existe.");
+                    }
+                    limpiarMenu(sc);
+                break;
+                }
+                case 10 :
+                    System.out.println("Cual es el nombre de la categoria a la que pertenece la actividad que desea eliminar?");
+                    String nombreCategoria =sc.next();
+                    if(datos.existeLista(nombreCategoria)){
+                        System.out.println("Cual es el nombre de la actividad que desea eliminar?");
+                        String nombreActividad =sc.next();
+                        Categoria ct = datos.recuperarCategoria(nombreCategoria);
+                        if(ct.existeActividad(nombreActividad)){
+                            ct.eliminarActividad(nombreActividad);
+                            datos.escribirFichero((Object)ct, ct.getNombre());
+                            System.out.println("Se elimino correctamente.");
+                        }else{
+                            System.out.println("La actividad no existe.");
+                        }
+                    }else{
+                        System.out.println("La categoria no existe.");
+                    }
+                    limpiarMenu(sc);
 
+                break;
+                default:
                 break;
             }
-        }while(opc != 8);
+        }while(opc != 11);
     }
 
 }

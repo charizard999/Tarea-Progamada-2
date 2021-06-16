@@ -39,8 +39,14 @@ public class Categoria implements Serializable{
         return listaActividades;
     }
 
-    public void agregarActividad(Actividad actividad){
-        
+    public void eliminarActividad(String nombre){
+        Actividad aux  = null;
+        for(Actividad a: listaActividades){
+            if(a.getNombre().toUpperCase().equals(nombre.toUpperCase())){
+                aux = a;
+            }
+        }
+        listaActividades.remove(aux);
 
     }
 
@@ -52,5 +58,9 @@ public class Categoria implements Serializable{
             }
         }
         return false;
+
+
     }
+
+
 }
