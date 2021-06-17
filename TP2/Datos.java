@@ -21,6 +21,7 @@ public class Datos {
         if(archivoDatos == null){
             archivoDatos = new ArrayList<>();
         }else{
+            System.out.println(archivoDatos);
             for (ArchivoDatos archivoDatos2 : archivoDatos) {
                 Object object2 = (Object)leerFichero(archivoDatos2.getNombreCategoria());
                 Categoria ct = (Categoria)object2;
@@ -52,10 +53,10 @@ public class Datos {
         return archivoDatos;
     }
 
-    public void setResponsable(ArrayList<Responsable> responsables){
+    public void setResponsables(ArrayList<Responsable> responsables){
         this.responsables = responsables;
     }
-    public ArrayList<Responsable> getResponsable(){
+    public ArrayList<Responsable> getResponsables(){
         return responsables;
     }
 

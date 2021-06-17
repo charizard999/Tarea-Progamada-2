@@ -62,5 +62,41 @@ public class Categoria implements Serializable{
 
     }
 
+    public void imprimirActividades(){
+        for(Actividad actividad : listaActividades){
+            System.out.println();
+            System.out.println("Id: "+ actividad.getId());
+            System.out.println("Nombre: "+ actividad.getNombre());
+            System.out.println("Fecha de inicio: "+ actividad.getFechaInicio());
+            System.out.println("Fecha Final: "+ actividad.getFechaFinal());
+            System.out.println("Responsable : "+ actividad.getResponsable().getNombre());
+            System.out.println("Presupuesto : "+ actividad.getEstimacion().getDinero() + "$.");
+            System.out.println("Esfuerzo : "+ actividad.getEstimacion().getEsfuerzo()+ "/10");
+            System.out.println("Tiempo : "+ actividad.getEstimacion().getTiempo()+ " horas.");
+            System.out.println("Grado de avance : "+ actividad.getGradoAvancce()+ "%.");
+            System.out.println("Estado : "+ actividad.getEstado());
+        }
+        
+    }
+
+    public void mostrarActividad(String nombre){
+        for(Actividad actividad : listaActividades){
+            if(actividad.getNombre().toUpperCase().equals(nombre.toUpperCase())){
+                System.out.println();
+                System.out.println("Id: "+ actividad.getId());
+                System.out.println("Nombre: "+ actividad.getNombre());
+                System.out.println("Fecha de inicio: "+ actividad.getFechaInicio());
+                System.out.println("Fecha Final: "+ actividad.getFechaFinal());
+                System.out.println("Responsable : "+ actividad.getResponsable().getNombre());
+                System.out.println("Presupuesto : "+ actividad.getEstimacion().getDinero() + "$.");
+                System.out.println("Esfuerzo : "+ actividad.getEstimacion().getEsfuerzo()+ "/10");
+                System.out.println("Tiempo : "+ actividad.getEstimacion().getTiempo()+ " horas.");
+                System.out.println("Grado de avance : "+ actividad.getGradoAvancce()+ "%.");
+                System.out.println("Estado : "+ actividad.getEstado());
+                
+            }
+        }
+    }
+
 
 }
