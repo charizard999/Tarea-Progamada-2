@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.io.Serializable;
 
 public class Categoria implements Serializable{
@@ -95,6 +96,23 @@ public class Categoria implements Serializable{
                 System.out.println("Estado : "+ actividad.getEstado());
                 
             }
+        }
+    }
+
+    public boolean buscarResponsable(String nombreResponsable){
+        for(Actividad actividad : listaActividades){
+            if( actividad.getResponsable().getNombre().toUpperCase().equals(nombreResponsable.toUpperCase())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void modificarActividad(Actividad actividad ){
+        System.out.println("Desea modificar el nombre?(Si/No)");
+        Scanner sc = new Scanner(System.in);
+        if(){
+
         }
     }
 

@@ -130,9 +130,9 @@ public class Datos {
     }
 
     public void imprimirResponsables(){
-        int contador = 1 ;
+        int contador = 1 ; 
         for(Responsable r : responsables){
-            System.out.println(contador + " " + r.getNombre());
+            System.out.println(contador + ". " + r.getNombre());
             contador++;
         }
     }
@@ -187,4 +187,25 @@ public class Datos {
         }
     }
 
+    public boolean buscarResponsable(String nombreResponsable){
+        for(Categoria c: categorias){
+               if(c.buscarResponsable(nombreResponsable)){
+                    return true;
+               }
+            
+        }
+        return false;
+    }
+
+    public Responsable getResponsableIndex(int i){
+        int contador = 1 ; 
+        for(Responsable r : responsables){
+            if(contador == i){
+                return r;
+            }
+            contador++;
+        }
+        return null;
+
+    }
 }
