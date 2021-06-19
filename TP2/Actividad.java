@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.Date;
+import java.util.ArrayList;
 
 /**
  * Clase Actividad.
@@ -17,7 +18,8 @@ public class Actividad implements Serializable{
     private Estimacion estimacion;
     private int gradoAvancce;
     private String estado;//creada, iniciada, finalizada
-
+    private Actividad actividadProxy;
+    private ArrayList<Recursos> recursos;
     /**
      * Constructor for objects of class xd
      */
@@ -37,6 +39,12 @@ public class Actividad implements Serializable{
     }
     public int getId(){
         return id;
+    }
+    public void setRecursos( ArrayList<Recursos> recursos){
+        this.recursos = recursos;
+    }
+    public ArrayList<Recursos> getRecursos(){
+        return recursos;
     }
 
     public void setNombre(String nombre){
@@ -83,6 +91,14 @@ public class Actividad implements Serializable{
 
     public void setEstado(String estado){
         this.estado = estado;
+    }
+    
+     public Actividad getActividadProxy(){
+        return actividadProxy;
+    }
+
+    public void setActividadProxy(Actividad ActividadProxy){
+        this.actividadProxy = actividadProxy;
     }
     public String getEstado(){
         return estado;

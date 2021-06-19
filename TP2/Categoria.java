@@ -141,7 +141,6 @@ public class Categoria implements Serializable{
         String respuesta4 = sc.next();
         if( respuesta4.toUpperCase().equals("S")){
             System.out.println("Digite el nuevo grado de avance de la actividad.");
-            sc.nextInt();
             int nuevoGradoDeAvance = sc.nextInt();
             actividad.setGradoAvancce(nuevoGradoDeAvance);
         }
@@ -204,6 +203,7 @@ public class Categoria implements Serializable{
             if(contador == i){
                 return r;
             }
+            contador++;
         }
         return null;
     }
@@ -219,5 +219,25 @@ public class Categoria implements Serializable{
 
     }
 
-
+    
+    public Actividad actividadIndex(int i){
+        int contador= 1 ;
+            for(Actividad a : listaActividades){
+            if(contador == i){
+                return a;
+            }
+        }
+        return null;
+    }
+    
+     public int getIndexActividad(String nombre){
+        int contador= 1 ;
+            for(Actividad actividad : listaActividades){
+            if(actividad.getNombre().toUpperCase().equals(nombre.toUpperCase())){
+                return contador;
+            }
+            contador++;
+        }
+        return contador;
+    }
 }

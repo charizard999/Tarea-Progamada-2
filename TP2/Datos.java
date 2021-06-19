@@ -25,10 +25,12 @@ public class Datos {
             for (ArchivoDatos archivoDatos2 : archivoDatos) {
                 Object object2 = (Object)leerFichero(archivoDatos2.getNombreCategoria());
                 Categoria ct = (Categoria)object2;
-                System.out.println(archivoDatos2.getNombreCategoria());
-                System.out.println(ct.getNombre());
-                
-                categorias.add(ct);
+                if(ct != null){
+                    System.out.println(archivoDatos2.getNombreCategoria());
+                    System.out.println(ct.getNombre());
+                    categorias.add(ct);
+                }
+               
 
             }
         }
@@ -207,5 +209,9 @@ public class Datos {
         }
         return null;
 
+    }
+    
+    public void mostrarTablero(){
+        
     }
 }

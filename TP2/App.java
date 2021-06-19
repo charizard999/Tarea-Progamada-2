@@ -52,7 +52,7 @@ public class App {
             System.out.println("1. Crear Lista.");//
             System.out.println("2. Agregar Responsables.");//
             System.out.println("3. Agregar Actividad.");//
-            System.out.println("4. Iniciar Actividad.");
+            System.out.println("4. Iniciar Actividad.");//revisar
             System.out.println("5. Consultar Actividades.");//
             System.out.println("6. Modificar Lista.");//
              System.out.println("7. Consultar Lista.");//
@@ -145,7 +145,38 @@ public class App {
                 break;
                 }
                 case 4 :{//Iniciar Actividad
-                
+                     System.out.println("Cual es la categoria de la actividad?");
+                        sc.nextLine();
+                        String nombreCategoria =sc.nextLine();
+                        if(datos.existeLista(nombreCategoria)){
+                            Categoria ct = datos.recuperarCategoria(nombreCategoria);
+                            System.out.println("Defina el nombre de la actividad.");
+                            //sc.nextLine();
+                            String nombre = sc.nextLine();
+                            if(!ct.existeActividad(nombre)){
+                                if(ct.getListaActividades().size() > 1){
+                                    int i = ct.getIndexActividad(nombre);
+                                    Actividad actividadModificada = ct.recuperarActividad(nombre);
+                                    Actividad actividad = ct.actividadIndex(i-1);
+                                    if(actividad.getEstado().equals("Finalizado")){
+                                        actividadModificada.setEstado("Iniciada");
+                                    }else{
+                                        Actividad actividadProxy = new Actividad(actividad.getId(), actividad.getNombre()+" Proxy", actividad.getFechaInicio(), actividad.getFechaFinal(), actividad.getGradoAvancce());
+                                        actividadProxy.setEstado("Finalizada");
+                                        actividadProxy.setResponsable(actividad.getResponsable());
+                                        actividadProxy.setEstimacion(actividad.getEstimacion());
+
+                                        actividadModificada.setActividadProxy(actividadProxy);
+                                         System.out.println("Se ha acreado un proxy para remplazar la tarea anterior que no ha finalizado.");
+                                    }
+                                }else{
+                                    Actividad actividad = ct.recuperarActividad(nombre);
+                                    actividad.setEstado("Iniciada");
+                                }
+                                    datos.escribirFichero((Object)ct, ct.getNombre());
+                            }
+                        }
+                            
                 break;
                 }
                 case 5 :{// Consultar Actividades.
@@ -301,6 +332,7 @@ public class App {
                     }else{
                         System.out.println("La categoria no existe.");
                     }
+                    limpiarMenu(sc);
                 break;
                 }
                 default:

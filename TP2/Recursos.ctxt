@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Recursos
+comment0.text=\r\n\ Clase\ Actividad.\r\n\ \r\n\ @author\ (Emilio\ Jos\u00E9\ Romero)\ \r\n\ @version\ (08/06/2021)\r\n
+comment1.params=nombre
+comment1.target=Recursos(java.lang.String)
+comment2.params=nombre
+comment2.target=void\ setNombre(java.lang.String)
+comment3.params=
+comment3.target=java.lang.String\ getNombre()
+numComments=4
