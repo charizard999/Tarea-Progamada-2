@@ -283,17 +283,23 @@ public class App {
                 break;
                 }
                 case 14 :{
-                    System.out.println("Cual es la categoria de la actividad?");
+                    System.out.println("Cual es la categoria de la actividad que desea modificar?");
                     sc.nextLine();
                     String nombreCategoria =sc.nextLine();
                     if(datos.existeLista(nombreCategoria)){
                         Categoria ct = datos.recuperarCategoria(nombreCategoria);
-                        System.out.println("Defina el nombre de la actividad.");
+                        System.out.println("Cual es la actividad que desea modificar.");
                         //sc.nextLine();
                         String nombre = sc.nextLine();
-                        if(!ct.existeActividad(nombre)){
-                            
+                        if(ct.existeActividad(nombre)){
+                            Actividad actividad = ct.recuperarActividad(nombre);
+                            ct.modificarActividad(actividad, datos.getResponsables());
+                            datos.escribirFichero((Object)ct, ct.getNombre());
+                        }else{
+                            System.out.println("La actividad no existe.");
                         }
+                    }else{
+                        System.out.println("La categoria no existe.");
                     }
                 break;
                 }
