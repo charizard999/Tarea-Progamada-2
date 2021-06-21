@@ -1,3 +1,4 @@
+import java.io.Serializable;
 
 /**
  * Clase Actividad.
@@ -5,7 +6,7 @@
  * @author (Emilio José Romero) 
  * @version (08/06/2021)
  */
-public class Recursos
+public class Recursos implements Serializable
 {
    private String nombre;
    
@@ -20,4 +21,6 @@ public class Recursos
         return nombre;
     }
 
+    
+    
 }

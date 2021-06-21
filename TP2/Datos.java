@@ -7,8 +7,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.io.Serializable;
 
-public class Datos {
+public class Datos implements Serializable {
 
     private ArrayList<Categoria>categorias;
     private ArrayList<ArchivoDatos> archivoDatos;
@@ -16,7 +17,9 @@ public class Datos {
 
     public Datos(){
         categorias = new ArrayList<>();
-        Object object = (Object)leerFichero("nombreDeListas");
+         responsables = new ArrayList<>();
+            archivoDatos = new ArrayList<>();
+        /*Object object = (Object)leerFichero("nombreDeListas");
         archivoDatos = (ArrayList<ArchivoDatos>)object;
         if(archivoDatos == null){
             archivoDatos = new ArrayList<>();
@@ -38,7 +41,7 @@ public class Datos {
         responsables = (ArrayList<Responsable>)object2;
         if(responsables == null){
             responsables = new ArrayList<>();
-        }
+        }*/
     }
 
     public void setCategorias(ArrayList<Categoria> categorias){
@@ -143,8 +146,10 @@ public class Datos {
         int contador= 1 ;
         for(Responsable r : responsables){
             if(contador == i){
+                System.out.println(r.getNombre());
                 return r;
             }
+            contador ++;
         }
         return null;
     }
@@ -183,8 +188,8 @@ public class Datos {
 
     public void imprimirCategarias(){
         int cont = 1;
-        for(ArchivoDatos a: archivoDatos){
-            System.out.println(cont + ". " + a.getNombreCategoria());
+        for(Categoria a: categorias){
+            System.out.println(cont + ". " + a.getNombre());
             cont++;
         }
     }
@@ -212,6 +217,40 @@ public class Datos {
     }
     
     public void mostrarTablero(){
-        
+        String titulos[]={"TAREAS", "HACIENDO","FINALIZADAS"};
+        for(int i=0; i<titulos.length;i++){
+            System.out.print(titulos[i]+"                      ");
+        }
+            System.out.println(); 
+        for(Categoria c: categorias){
+              System.out.println("Nombre de la lista: "+c.getNombre()); 
+            for(Actividad a: c.getListaActividades()){
+                if(a.getEstado().equals("Creada")){
+                    System.out.print(a.getNombre()+"                       ");  
+                    
+                }else{
+                    System.out.print("                             ");  
+                }
+                if(a.getEstado().equals("Iniciada")){
+                   System.out.println(a.getNombre()+"                       ");  
+                   System.out.println("                             RECURSOS                        ");  
+                   a.imprimirRecursosTablero();
+                   System.out.println("                             DATOS ADMINSTRATIVOS                        ");  
+                   System.out.println("                             Inicio: "+a.getFechaInicio());  
+                   System.out.println("                             Responsable: "+a.getResponsable().getNombre());  
+                   System.out.println("                             Duracion: "+a.getEstimacion().getTiempo());  
+                }else{
+                    System.out.print("                                    ");  
+                }
+                
+                if(a.getEstado().equals("Finalizada")){
+                    System.out.print(a.getNombre()+"                       ");  
+                }else{
+                    System.out.print("                           ");  
+                }
+                 System.out.println(""); 
+            }
+            System.out.println(""); 
+        }
     }
 }

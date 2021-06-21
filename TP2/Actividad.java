@@ -29,7 +29,7 @@ public class Actividad implements Serializable{
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
         this.gradoAvancce = gradoAvancce;
-
+        this.recursos = new ArrayList();
         
 
     }
@@ -103,5 +103,45 @@ public class Actividad implements Serializable{
     public String getEstado(){
         return estado;
     }
+    
+     public void imprimirRecursos(){
+        int contador = 1;
+        for(Recursos r : recursos){
+            System.out.println(contador + ". " + r.getNombre());
+            contador++;
+        }
+    }
+    
+    public void imprimirRecursosTablero(){
+        int contador = 1;
+        for(Recursos r : recursos){
+            System.out.println("                             "+contador + ". " + r.getNombre());
+            contador++;
+        }
+    }
+    
+    public boolean buscarRecurso(String nombreRecurso){
+        for(Recursos r: recursos){
+               if(r.getNombre().toUpperCase().equals(nombreRecurso.toUpperCase())){
+                    return true;
+               }
+            
+        }
+        return false;
+    }
+    
+     public Recursos getRecursoIndex(int i){
+        int contador = 1 ; 
+        for(Recursos r: recursos){
+            if(contador == i){
+                return r;
+            }
+            contador++;
+        }
+        return null;
 
+    }
+    
+    
+    
 }

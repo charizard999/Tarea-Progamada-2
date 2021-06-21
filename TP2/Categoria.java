@@ -53,6 +53,8 @@ public class Categoria implements Serializable{
         listaActividades.remove(aux);
 
     }
+    
+
 
 
     public boolean existeActividad(String nombre){
@@ -79,6 +81,15 @@ public class Categoria implements Serializable{
             System.out.println("Tiempo : "+ actividad.getEstimacion().getTiempo()+ " horas.");
             System.out.println("Grado de avance : "+ actividad.getGradoAvancce()+ "%.");
             System.out.println("Estado : "+ actividad.getEstado());
+            if(actividad.getRecursos() != null){
+                int contador = 1;
+                System.out.println("Recursos de la actividad : ");
+                for(Recursos recursos : actividad.getRecursos()){
+                     System.out.println(contador + ". " + recursos.getNombre());
+                     contador++;
+                }
+            }
+           
         }
         
     }
@@ -97,7 +108,14 @@ public class Categoria implements Serializable{
                 System.out.println("Tiempo : "+ actividad.getEstimacion().getTiempo()+ " horas.");
                 System.out.println("Grado de avance : "+ actividad.getGradoAvancce()+ "%.");
                 System.out.println("Estado : "+ actividad.getEstado());
-                
+                 if(actividad.getRecursos() != null){
+                int contador = 1;
+                System.out.println("Recursos de la actividad : ");
+                for(Recursos recursos : actividad.getRecursos()){
+                     System.out.println(contador + ". " + recursos.getNombre());
+                     contador++;
+                }
+            }
             }
         }
     }
@@ -240,4 +258,6 @@ public class Categoria implements Serializable{
         }
         return contador;
     }
+    
+    
 }

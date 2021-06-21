@@ -22,6 +22,20 @@ public class App {
         } catch (IOException | InterruptedException ex) {}
     }
     
+    
+    public static Object leerFichero(String nombreArchivo){
+        try{
+            ObjectInputStream leyendoFichero = new ObjectInputStream( 
+            new FileInputStream(nombreArchivo + ".txt") );
+            Object object = (Object)leyendoFichero.readObject();
+            leyendoFichero.close();
+            return object;
+        }catch(Exception e){
+            //e.printStackTrace();
+            return null;
+        }
+    }
+    
      /**
      *Limpia el menu.
      */
@@ -42,7 +56,10 @@ public class App {
     public static void main(String[] args) throws Exception {
        
         
-        Datos datos= new Datos();
+        Datos datos= (Datos)leerFichero("Datos");
+        if(datos==null){
+            datos =new Datos();
+        }
         Categoria categoria = new Categoria();
         
         Scanner sc = new Scanner(System.in);
@@ -62,8 +79,11 @@ public class App {
             System.out.println("11. Eliminar responsable.");//
             System.out.println("12. Mostrar Tablero");
             System.out.println("13. Mostrar Responsables");//
-            System.out.println("14. Modificar actividad.");
-            System.out.println("15. Salir.");
+            System.out.println("14. Modificar actividad.");//
+            System.out.println("15. Agregar recursos de la Actividad.");//
+            System.out.println("16. Eliminar recursos de la Actividad.");//
+            System.out.println("17. Finalizar actividad.");//
+            System.out.println("18. Salir.");
             opc = sc.nextInt();
             switch(opc){
                 case 1 :{//agregar lsita
@@ -72,11 +92,12 @@ public class App {
                     String nombreCategoria = sc.nextLine();
                     if(!datos.existeLista(nombreCategoria)){
                         Categoria ct = new Categoria(nombreCategoria, datos.getCategorias().size());
-                        datos.escribirFichero((Object)ct, nombreCategoria);
                         datos.getCategorias().add(ct);
-                        ArchivoDatos ad = new ArchivoDatos(nombreCategoria);
-                        datos.getArchivoDatos().add(ad);
-                        datos.escribirFichero((Object)datos.getArchivoDatos(), "nombreDeListas"); 
+                        datos.escribirFichero((Object)datos, "Datos");
+                       
+                        //ArchivoDatos ad = new ArchivoDatos(nombreCategoria);
+                        //datos.getArchivoDatos().add(ad);
+                        //datos.escribirFichero((Object)datos.getArchivoDatos(), "nombreDeListas"); 
                         System.out.println("La categoría se guardó correctamente.");
                     }else{
                         System.out.println("La categoría ya existe.");
@@ -91,7 +112,7 @@ public class App {
                     if(!datos.existeResponsable(nombreResponsable)){
                         Responsable responsable = new Responsable(nombreResponsable);
                         datos.getResponsables().add(responsable);
-                        datos.escribirFichero((Object)datos.getResponsables(), "Responsables");
+                        datos.escribirFichero((Object)datos, "Datos");
                         System.out.println("Se agrego correctamente.");
                     }else{
                         System.out.println("El responsable ya existe.");
@@ -130,7 +151,7 @@ public class App {
                                 datos.imprimirResponsables();
                                 int responsable = sc.nextInt();
                                 actividad.setResponsable(datos.responsableIndex(responsable));
-                                datos.escribirFichero((Object)ct, ct.getNombre());
+                                datos.escribirFichero((Object)datos, "Datos");
                                 System.out.println("Se agregó correctamente.");
                             }else{
                                 System.out.println("La actividad ya existe.");
@@ -153,9 +174,9 @@ public class App {
                             System.out.println("Defina el nombre de la actividad.");
                             //sc.nextLine();
                             String nombre = sc.nextLine();
-                            if(!ct.existeActividad(nombre)){
-                                if(ct.getListaActividades().size() > 1){
-                                    int i = ct.getIndexActividad(nombre);
+                            if(ct.existeActividad(nombre)){
+                                   int i = ct.getIndexActividad(nombre);
+                                    if(i !=1){
                                     Actividad actividadModificada = ct.recuperarActividad(nombre);
                                     Actividad actividad = ct.actividadIndex(i-1);
                                     if(actividad.getEstado().equals("Finalizado")){
@@ -165,18 +186,25 @@ public class App {
                                         actividadProxy.setEstado("Finalizada");
                                         actividadProxy.setResponsable(actividad.getResponsable());
                                         actividadProxy.setEstimacion(actividad.getEstimacion());
-
                                         actividadModificada.setActividadProxy(actividadProxy);
-                                         System.out.println("Se ha acreado un proxy para remplazar la tarea anterior que no ha finalizado.");
+                                        actividadModificada.setEstado("Iniciada");
+                                        ct.getListaActividades().add(i,actividadProxy);
+                                        System.out.println("Se ha acreado un proxy para remplazar la tarea anterior que no ha finalizado.");
                                     }
                                 }else{
                                     Actividad actividad = ct.recuperarActividad(nombre);
                                     actividad.setEstado("Iniciada");
                                 }
-                                    datos.escribirFichero((Object)ct, ct.getNombre());
+                                
+                                    datos.escribirFichero((Object)datos, "Datos");
+                                    System.out.println("La actividad se ha iniciado");
+                            }else{
+                                System.out.println("La actividad no existe");
                             }
+                        }else{
+                             System.out.println("La categoria no existe");
                         }
-                            
+                       limpiarMenu(sc);     
                 break;
                 }
                 case 5 :{// Consultar Actividades.
@@ -185,6 +213,7 @@ public class App {
                     String nombreCategoria = sc.nextLine();;
                     if(datos.existeLista(nombreCategoria)){
                         Categoria ct = datos.recuperarCategoria(nombreCategoria);
+                        System.out.println("Lista de actividades: ");
                         ct.imprimirActividades();
                         
                     }else{
@@ -194,7 +223,7 @@ public class App {
 
                 break;
                 }
-                case 6 :{//Modificar Lista
+                case 6 :{//Modificar Lista   
                     System.out.println("Cual categoria desea modificar?");
                     sc.nextLine();
                     String nombre = sc.nextLine();
@@ -207,8 +236,8 @@ public class App {
                         if(datos.eliminarFichero(nombre)){
                             ArchivoDatos archivoDatos = datos.recuperarArchivoDatos(nombre);
                             archivoDatos.setNombreCategoria(nombreNuevo);
-                            datos.escribirFichero((Object)datos.getArchivoDatos(), "nombreDeListas"); 
-                            datos.escribirFichero((Object)ct, ct.getNombre());
+                           // datos.escribirFichero((Object)datos.getArchivoDatos(), "nombreDeListas"); 
+                            datos.escribirFichero((Object)datos, "Datos");
                             System.out.println("Se agregó correctamente.");
                         }else{
                             System.out.println("Hubo un error al modificar el fichero.");
@@ -252,14 +281,14 @@ public class App {
                     sc.nextLine();
                     String nombre =sc.nextLine();;
                     if(datos.existeLista(nombre)){
-                        if(datos.eliminarFichero(nombre)){
+                       // if(datos.eliminarFichero(nombre)){
                             datos.eliminarCategoria(nombre);
-                            datos.eliminarArchivoDatos(nombre);
-                            datos.escribirFichero((Object)datos.getArchivoDatos(), "nombreDeListas");
+                            //datos.eliminarArchivoDatos(nombre);
+                            datos.escribirFichero((Object)datos, "Datos");
                             System.out.println("Se elimino correctamente.");
-                        }else{
-                            System.out.println("Hubo un error al eliminar el fichero.");
-                        }
+                      //  }else{
+                      //      System.out.println("Hubo un error al eliminar el fichero.");
+                      //  }
                     }else{
                         System.out.println("La categoria no existe.");
                     }
@@ -272,12 +301,12 @@ public class App {
                     String nombreCategoria =sc.nextLine();;
                     if(datos.existeLista(nombreCategoria)){
                         System.out.println("Cual es el nombre de la actividad que desea eliminar?");
-                        sc.nextLine();
+                        //sc.nextLine();
                         String nombreActividad =sc.nextLine();
                         Categoria ct = datos.recuperarCategoria(nombreCategoria);
                         if(ct.existeActividad(nombreActividad)){
                             ct.eliminarActividad(nombreActividad);
-                            datos.escribirFichero((Object)ct, ct.getNombre());
+                            datos.escribirFichero((Object)datos, "Datos");
                             System.out.println("Se elimino correctamente.");
                         }else{
                             System.out.println("La actividad no existe.");
@@ -296,7 +325,7 @@ public class App {
                     if(responsable >= 0){
                        if(!datos.buscarResponsable(datos.getResponsableIndex(responsable).getNombre())){
                             datos.getResponsables().remove(datos.getResponsableIndex(responsable));
-                            datos.escribirFichero((Object)datos.getResponsables(), "Responsables");
+                            datos.escribirFichero((Object)datos, "Datos");
                             System.out.println("Se elimino correctamente.");
                         }else{
                             System.out.println("No se puede eliminar el responsable porque esta relacionado con una actividad.");
@@ -305,15 +334,19 @@ public class App {
                     limpiarMenu(sc);
                 break;
                 }
-                case 12 :
-                
+                case 12 :{
+                    System.out.println("Tablero de tareas: ");
+                    datos.mostrarTablero();
+                     limpiarMenu(sc);
                 break;
+                }
                 case 13 :{//mostrar responsables
                     System.out.println("Responsables: ");
                     datos.imprimirResponsables();
+                     limpiarMenu(sc);
                 break;
                 }
-                case 14 :{
+                case 14 :{//modificar actividad
                     System.out.println("Cual es la categoria de la actividad que desea modificar?");
                     sc.nextLine();
                     String nombreCategoria =sc.nextLine();
@@ -325,7 +358,7 @@ public class App {
                         if(ct.existeActividad(nombre)){
                             Actividad actividad = ct.recuperarActividad(nombre);
                             ct.modificarActividad(actividad, datos.getResponsables());
-                            datos.escribirFichero((Object)ct, ct.getNombre());
+                            datos.escribirFichero((Object)datos, "Datos");
                         }else{
                             System.out.println("La actividad no existe.");
                         }
@@ -335,12 +368,95 @@ public class App {
                     limpiarMenu(sc);
                 break;
                 }
+                case 15:{//agregar recursos
+                    System.out.println("Cual es el nombre de la categoria a la que pertenece la actividad?");
+                    sc.nextLine();
+                    String nombreCategoria =sc.nextLine();
+                    if(datos.existeLista(nombreCategoria)){
+                        System.out.println("Cual es el nombre de la actividad?");
+                        //sc.nextLine();
+                        String nombreActividad =sc.nextLine();
+                        Categoria ct = datos.recuperarCategoria(nombreCategoria);
+                        if(ct.existeActividad(nombreActividad)){
+                            Actividad actividad = ct.recuperarActividad(nombreActividad);
+                            System.out.println("Cual recurso desea agregar?");
+                            //sc.nextLine();
+                            String nombreRecursos = sc.nextLine();
+                            actividad.getRecursos().add(new Recursos(nombreRecursos));
+                            datos.escribirFichero((Object)datos, "Datos");
+                            System.out.println("Los recursos se agregaron correctamente.");
+                        }else{
+                              System.out.println("La actividad no existe.");
+                        }
+                    }else{
+                        System.out.println("La categoria no existe.");
+                    }
+                    limpiarMenu(sc);
+                    
+                break;
+            
+                }
+                case 16:{//eliminar recursos
+                    System.out.println("Cual es el nombre de la categoria a la que pertenece los recursos que desea eliminar?");
+                    sc.nextLine();
+                    String nombreCategoria =sc.nextLine();;
+                    if(datos.existeLista(nombreCategoria)){
+                        System.out.println("Cual es la actividad del recurso que desea eliminar?");
+                        //sc.nextLine();
+                        String nombreActividad =sc.nextLine();
+                        Categoria ct = datos.recuperarCategoria(nombreCategoria);
+                        if(ct.existeActividad(nombreActividad)){
+                            System.out.println("Seleccione el numero del recurso que desea eliminar?");
+                            Actividad actividad = ct.recuperarActividad(nombreActividad);
+                            actividad.imprimirRecursos();
+                            int numeroRecurso = sc.nextInt();
+                            if(actividad.buscarRecurso(actividad.getRecursoIndex(numeroRecurso).getNombre())){
+                                actividad.getRecursos().remove(actividad.getRecursoIndex(numeroRecurso));
+                                datos.escribirFichero((Object)datos, "Datos");
+                                System.out.println("Se elimino correctamente.");
+                            }else{
+                                 System.out.println("El recurso no existe.");
+                            }
+                           
+                        }else{
+                            System.out.println("El recurso no existe.");
+                        }
+                    }else{
+                        System.out.println("La categoria no existe.");
+                    }
+                    limpiarMenu(sc);
+                break;
+                }
+                case 17:{
+                     System.out.println("Cual es la categoria de la actividad?");
+                        sc.nextLine();
+                        String nombreCategoria =sc.nextLine();
+                        if(datos.existeLista(nombreCategoria)){
+                            Categoria ct = datos.recuperarCategoria(nombreCategoria);
+                            System.out.println("Defina el nombre de la actividad.");
+                            //sc.nextLine();
+                            String nombre = sc.nextLine();
+                            if(ct.existeActividad(nombre)){
+                                    Actividad actividad = ct.recuperarActividad(nombre);
+                                    actividad.setEstado("Finalizada");
+                                    datos.escribirFichero((Object)datos, "Datos");
+                                    System.out.println("La actividad se ha finalizado");
+                            }else{
+                                System.out.println("La actividad no existe");
+                            }
+                        }else{
+                            System.out.println("La categoria no existe");
+                        }
+                       limpiarMenu(sc);     
+                break;
+                }
+                
                 default:
                 
                 break;
             }
             
-        }while(opc != 15);
+        }while(opc != 18);
     }
 
 }
