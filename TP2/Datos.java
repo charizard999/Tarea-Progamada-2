@@ -8,63 +8,87 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.io.Serializable;
-
+/**
+ * Clase Datos.
+ * 
+ * @author (Emilio Romero) 
+ * @version (08/06/2021)
+ */
 public class Datos implements Serializable {
 
     private ArrayList<Categoria>categorias;
     private ArrayList<ArchivoDatos> archivoDatos;
     private ArrayList<Responsable>responsables;
-
+    
+    /**
+     * Constructor de objetos de la clase Datos.
+     */
     public Datos(){
         categorias = new ArrayList<>();
-         responsables = new ArrayList<>();
-            archivoDatos = new ArrayList<>();
-        /*Object object = (Object)leerFichero("nombreDeListas");
-        archivoDatos = (ArrayList<ArchivoDatos>)object;
-        if(archivoDatos == null){
-            archivoDatos = new ArrayList<>();
-        }else{
-            System.out.println(archivoDatos);
-            for (ArchivoDatos archivoDatos2 : archivoDatos) {
-                Object object2 = (Object)leerFichero(archivoDatos2.getNombreCategoria());
-                Categoria ct = (Categoria)object2;
-                if(ct != null){
-                    System.out.println(archivoDatos2.getNombreCategoria());
-                    System.out.println(ct.getNombre());
-                    categorias.add(ct);
-                }
-               
-
-            }
-        }
-        Object object2 = (Object)leerFichero("Responsables");
-        responsables = (ArrayList<Responsable>)object2;
-        if(responsables == null){
-            responsables = new ArrayList<>();
-        }*/
+        responsables = new ArrayList<>();
+        archivoDatos = new ArrayList<>();
     }
-
+    
+    /**
+     * Setear categorías.
+     *
+     * @param categorias (ArrayList<Categoria>) .
+     * 
+     */
     public void setCategorias(ArrayList<Categoria> categorias){
         this.categorias = categorias;
     }
+       /**
+     * Obtener categorías.
+     *
+     * 
+     * @return  categorias (ArrayList<Categoria>)
+     */
     public ArrayList<Categoria> getCategorias(){
         return categorias;
     }
-
+    /**
+     * Setear ArchivoDatos.
+     *
+     * @param archivoDatos (ArrayList<ArchivoDatos>) .
+     * 
+     */
     public void setArchivoDatos(ArrayList<ArchivoDatos> archivoDatos){
         this.archivoDatos = archivoDatos;
     }
+      /**
+     * Obtener ArchivoDatos.
+     *
+     * 
+     * @return  archivoDatos (ArrayList<ArchivoDatos>)
+     */
     public ArrayList<ArchivoDatos> getArchivoDatos(){
         return archivoDatos;
     }
-
+    /**
+     * Setear Responsable.
+     *
+     * @param responsables (ArrayList<Responsable>) 
+     * 
+     */
     public void setResponsables(ArrayList<Responsable> responsables){
         this.responsables = responsables;
     }
+      /**
+     * Obtener Responsable.
+     *
+     * 
+     * @return  responsables (ArrayList<Responsable>)
+     */
     public ArrayList<Responsable> getResponsables(){
         return responsables;
     }
-
+     /**
+     * Verifica que exista el responsable.
+     * 
+     * @param  nombre (String)
+     * @return  boolean
+     */
     public boolean existeResponsable(String nombre){
         for(Responsable r : responsables){
             if(r.getNombre().toUpperCase().equals(nombre.toUpperCase())){
@@ -73,7 +97,12 @@ public class Datos implements Serializable {
         }
         return false;
     }
-
+     /**
+     * Se obtinene el responsable.
+     * 
+     * @param  nombre (String)
+     * @return  r (Responsable)
+     */
     public Responsable recuperarResponsable(String nombre){
         for(Responsable r: responsables){
             if(r.getNombre().toUpperCase().equals(nombre.toUpperCase())){
@@ -82,7 +111,12 @@ public class Datos implements Serializable {
         }
         return null;
     }
-
+      /**
+     * Se obtinene la categoría.
+     * 
+     * @param  nombre (String)
+     * @return  ct (Categoria)
+     */
     public Categoria recuperarCategoria(String nombre){
         for(Categoria ct: categorias){
             if(ct.getNombre().toUpperCase().equals(nombre.toUpperCase())){
@@ -91,7 +125,12 @@ public class Datos implements Serializable {
         }
         return null;
     }
-
+      /**
+     * Escribe en el fichero.
+     * 
+     * @param  ob (Object), nombreArchivo (String)
+     * 
+     */
     public void escribirFichero(Object ob, String nombreArchivo){
         try{
             ObjectOutputStream escribiendoFichero = new ObjectOutputStream( 
@@ -102,7 +141,12 @@ public class Datos implements Serializable {
             e.printStackTrace();
         }
     }
-
+     /**
+     * Lee el fichero.
+     * 
+     * @param  nombreArchivo (String)
+     * 
+     */
     public Object leerFichero(String nombreArchivo){
         try{
             ObjectInputStream leyendoFichero = new ObjectInputStream( 
@@ -111,11 +155,15 @@ public class Datos implements Serializable {
             leyendoFichero.close();
             return object;
         }catch(Exception e){
-            //e.printStackTrace();
             return null;
         }
     }
-
+     /**
+     * Comprueba que exista una lista.
+     * 
+     * @param  nombre (String)
+     * 
+     */
     public boolean existeLista(String nombre){
         for(Categoria categoria : categorias){
             if(categoria.getNombre().toUpperCase().equals(nombre.toUpperCase())){
@@ -124,7 +172,12 @@ public class Datos implements Serializable {
         }
         return false;
     }
-    
+     /**
+     * Pasa un String a Date.
+     * 
+     * @param  fecha (String)
+     * @return  date (Date)
+     */
     public Date parseDate(String fecha){
         try {
             Date date = new SimpleDateFormat("dd/mm/yyyy").parse(fecha);
@@ -133,7 +186,9 @@ public class Datos implements Serializable {
             return null;
         }
     }
-
+    /**
+     * Imprime responsables.
+     */
     public void imprimirResponsables(){
         int contador = 1 ; 
         for(Responsable r : responsables){
@@ -141,7 +196,12 @@ public class Datos implements Serializable {
             contador++;
         }
     }
-
+    /**
+     * Busca por medio de un int el respectivo responsable.
+     * 
+     * @param  i (int)
+     * @return  responsables (Responsable)
+     */
     public Responsable responsableIndex(int i){
         int contador= 1 ;
         for(Responsable r : responsables){
@@ -153,11 +213,21 @@ public class Datos implements Serializable {
         }
         return null;
     }
-
+     /**
+     * Elimina el fichero.
+     * 
+     * @param  nombre (String)
+     * @return  boolean
+     */
     public boolean eliminarFichero(String nombre){
         File fichero = new File(nombre + ".txt");
         return fichero.delete();
     } 
+    /**
+     * Elimina la categaría.
+     * 
+     * @param  nombre (String)
+     */
     public void eliminarCategoria(String nombre){
         Categoria aux  = null;
         for(Categoria c: categorias){
@@ -176,7 +246,12 @@ public class Datos implements Serializable {
         }
         archivoDatos.remove(aux);
     } 
-
+    /**
+     * Recupera ArchivoDatos.
+     * 
+     * @param  nombre (String)
+     * @return  a (ArchivoDatos)
+     */
     public ArchivoDatos recuperarArchivoDatos(String nombre){
         for(ArchivoDatos a: archivoDatos){
             if(a.getNombreCategoria().toUpperCase().equals(nombre.toUpperCase())){
@@ -185,7 +260,9 @@ public class Datos implements Serializable {
         }
         return null;
     }
-
+     /**
+     * Imprime las categorías.
+     */
     public void imprimirCategarias(){
         int cont = 1;
         for(Categoria a: categorias){
@@ -193,7 +270,12 @@ public class Datos implements Serializable {
             cont++;
         }
     }
-
+     /**
+     * Busca si existe el responsable.
+     * 
+     * @param  nombreResponsable (String)
+     * @return  boolean
+     */
     public boolean buscarResponsable(String nombreResponsable){
         for(Categoria c: categorias){
                if(c.buscarResponsable(nombreResponsable)){
@@ -203,7 +285,12 @@ public class Datos implements Serializable {
         }
         return false;
     }
-
+    /**
+     * Obtiene el responsable por medio de un int.
+     * 
+     * @param  i (int)
+     * @return  r (Responsable)
+     */
     public Responsable getResponsableIndex(int i){
         int contador = 1 ; 
         for(Responsable r : responsables){
@@ -215,7 +302,9 @@ public class Datos implements Serializable {
         return null;
 
     }
-    
+        /**
+     * Muestra el tablero.
+     */
     public void mostrarTablero(){
         String titulos[]={"TAREAS", "HACIENDO","FINALIZADAS"};
         for(int i=0; i<titulos.length;i++){

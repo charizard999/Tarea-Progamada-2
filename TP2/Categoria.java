@@ -4,45 +4,91 @@ import java.util.Scanner;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
+/**
+ * Clase Categoria.
+ * 
+ * @author (Emilio Romero) 
+ * @version (08/06/2021)
+ */
 public class Categoria implements Serializable{
 
     private String nombre;
     private int id;
     private ArrayList<Actividad> listaActividades;
-
+     /**
+     * Constructor de objetos de la clase Datos.
+     */
     public Categoria(String nombre, int id){
         this.nombre = nombre;
         this.id = id;
         listaActividades = new ArrayList<>();
 
     }
-
+     /**
+     * Constructor de objetos de la clase Datos.
+     */
     public Categoria(){
 
     }
-    
+    /**
+     * Setear ID.
+     *
+     * @param id (int) .
+     * 
+     */
     public void setId( int id){
         this.id = id;
     }
+          /**
+     * Obtener categorías.
+     *
+     * 
+     * @return  id (int)
+     */
     public int getId(){
         return id;
     }
-
+     /**
+     * Setear nombre.
+     *
+     * @param nombre (nombre) .
+     * 
+     */
     public void setNombre(String nombre){
         this.nombre = nombre;
     }
+         /**
+     * Obtener nombre.
+     *
+     * 
+     * @return  nombre (String)
+     */
     public String getNombre(){
         return nombre;
     }
-
+    /**
+     * Setear ListaActividades.
+     *
+     * @param listaActividades (ArrayList<Actividad>) .
+     * 
+     */
     public void setListaActividades(ArrayList<Actividad> listaActividades){
         this.listaActividades = listaActividades;
     }
+        /**
+     * Obtener ListaActividades.
+     *
+     * 
+     * @return  listaActividades (ArrayList<Actividad>)
+     */
     public ArrayList<Actividad> getListaActividades(){
         return listaActividades;
     }
-
+    /**
+     * Elimina una actividad.
+     * 
+     * @param  nombre (String)
+     */
     public void eliminarActividad(String nombre){
         Actividad aux  = null;
         for(Actividad a: listaActividades){
@@ -53,10 +99,12 @@ public class Categoria implements Serializable{
         listaActividades.remove(aux);
 
     }
-    
-
-
-
+    /**
+     * Comprueba que exita la Actividad.
+     * 
+     * @param  nombre (String)
+     * @return  boolean
+     */
     public boolean existeActividad(String nombre){
         for(Actividad actividad : listaActividades){
             if(actividad.getNombre().toUpperCase().equals(nombre.toUpperCase())){
@@ -67,7 +115,9 @@ public class Categoria implements Serializable{
 
 
     }
-
+     /**
+     * Imprime las Actividades.
+     */
     public void imprimirActividades(){
         for(Actividad actividad : listaActividades){
             System.out.println();
@@ -93,7 +143,11 @@ public class Categoria implements Serializable{
         }
         
     }
-
+     /**
+     * Muestra la actividad.
+     * 
+     * @param  nombre (String)
+     */
     public void mostrarActividad(String nombre){
         for(Actividad actividad : listaActividades){
             if(actividad.getNombre().toUpperCase().equals(nombre.toUpperCase())){
@@ -119,7 +173,12 @@ public class Categoria implements Serializable{
             }
         }
     }
-
+     /**
+     * Busca un responsable.
+     * 
+     * @param  nombreResponsable (String)
+     * @return  boolean
+     */
     public boolean buscarResponsable(String nombreResponsable){
         for(Actividad actividad : listaActividades){
             if( actividad.getResponsable().getNombre().toUpperCase().equals(nombreResponsable.toUpperCase())){
@@ -128,7 +187,11 @@ public class Categoria implements Serializable{
         }
         return false;
     }
-
+     /**
+     * Modifica Actividad.
+     * 
+     * @param  actividad (Actividad), responsables (ArrayList<Responsable>)
+     */
     public void modificarActividad(Actividad actividad, ArrayList<Responsable> responsables){
         System.out.println("Desea modificar el nombre?(S/N)");
         Scanner sc = new Scanner(System.in);
@@ -195,8 +258,12 @@ public class Categoria implements Serializable{
         System.out.println("Actividad modificada correctamente.");
     }
     
-    
-    
+       /**
+     * Pasa de tipo String a Date.
+     * 
+     * @param  fecha (String)
+     * @return  date (Date)
+     */
     public Date parseDate(String fecha){
         try {
             Date date = new SimpleDateFormat("dd/mm/yyyy").parse(fecha);
@@ -205,7 +272,11 @@ public class Categoria implements Serializable{
             return null;
         }
     }
-
+      /**
+     *Imprime Responsables.
+     * 
+     * @param  responsables (ArrayList<Responsable>)
+     */
     public void imprimirResponsables(ArrayList<Responsable> responsables){
         int contador = 1 ; 
         for(Responsable r : responsables){
@@ -214,7 +285,12 @@ public class Categoria implements Serializable{
         }
     }
 
-    
+       /**
+     * Retorna un responsable por medio de un int.
+     * 
+     * @param  i (int), responsables (ArrayList<Responsable>)
+     * @return  r (Responsable)
+     */
     public Responsable responsableIndex(int i, ArrayList<Responsable> responsables ){
         int contador= 1 ;
         for(Responsable r : responsables){
@@ -225,7 +301,12 @@ public class Categoria implements Serializable{
         }
         return null;
     }
-
+         /**
+     * Recupera la actividad.
+     * 
+     * @param  nombre (String)  
+    * @return  actividad (Actividad)
+     */
     public Actividad recuperarActividad(String nombre){
         for(Actividad actividad : listaActividades){
             if(actividad.getNombre().toUpperCase().equals(nombre.toUpperCase())){
@@ -237,7 +318,12 @@ public class Categoria implements Serializable{
 
     }
 
-    
+        /**
+     * Busca la actividad por medio de un int.
+     * 
+     * @param  i (int)  
+    * @return  a (Actividad)
+     */
     public Actividad actividadIndex(int i){
         int contador= 1 ;
             for(Actividad a : listaActividades){
@@ -247,7 +333,12 @@ public class Categoria implements Serializable{
         }
         return null;
     }
-    
+         /**
+     * Busca la actividad por medio de un nombre.
+     * 
+     * @param  nombre (String)  
+    * @return  contador (int)
+     */
      public int getIndexActividad(String nombre){
         int contador= 1 ;
             for(Actividad actividad : listaActividades){

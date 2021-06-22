@@ -6,6 +6,7 @@ comment1.target=void\ limpiarConsola()
 comment1.text=\r\n\ Limpia\ la\ consola.\r\n
 comment2.params=nombreArchivo
 comment2.target=java.lang.Object\ leerFichero(java.lang.String)
+comment2.text=\r\n\ lee\ el\ fichero.\r\n\ \r\n\ @param\ \ nombreArchivo\ (String)\r\n\ @return\ \ object\ (Object)\r\n
 comment3.params=sc
 comment3.target=void\ limpiarMenu(java.util.Scanner)
 comment3.text=\r\nLimpia\ el\ menu.\r\n
